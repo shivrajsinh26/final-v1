@@ -1,0 +1,40 @@
+.login {
+  display: flex;
+  width: 100vw;
+  height: 100vh;
+  justify-content: center;
+  align-items: center;
+  background-color: whitesmoke;
+}
+
+.whatslogo {
+  max-width: 100px;
+}
+
+.login-container {
+  border: 1px solid #ccc;
+  padding: 10px;
+  width: 60%;
+  height: 60%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  align-items: center;
+  border-radius: 40px;
+  background-color: white;
+}
+
+.login-form {
+  padding: 10%;
+  display: flex;
+  height: 100%;
+  width: 100%;
+  justify-content: space-between;
+  align-items: center;
+  flex-direction: column;
+}
+span {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}

@@ -1,0 +1,109 @@
+.sidebar {
+  display: flex;
+  flex-direction: column;
+  flex: 0.3;
+}
+
+.sidebar__header {
+  background-color: rgb(240, 242, 245);
+  display: flex;
+  justify-content: space-between;
+  padding: 20px;
+  border-right: 1px solid lightgray;
+}
+
+.sidebar__headerRight {
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+  min-width: 5vw;
+}
+
+.sidebar__headerRight > .MuiSvgIcon-root {
+  margin-right: 2vw;
+  font-size: 24px !important;
+}
+
+.sidebar__search {
+  display: flex;
+  align-items: center;
+  background-color: #ffffff;
+  padding: 10px;
+  height: 48px;
+}
+
+.sidebar__searchContainer {
+  display: flex;
+  align-items: center;
+  background-color: #f0f2f5;
+  width: 100%;
+  height: 35px;
+  padding: 8px;
+  border-radius: 10px;
+}
+
+.sidebar__searchContainer > input {
+  border: none;
+  outline: none;
+  margin-left: 10px;
+  width: 80%;
+  background-color: #f0f2f5;
+}
+
+.sidebar__searchContainer > input:focus,
+input:active {
+  outline: none;
+}
+
+.sidebar__searchContainer > .MuiSvgIcon-root {
+  padding: 10px;
+}
+
+.sidebar__chats {
+  flex: 1;
+  overflow-y: scroll;
+  overflow-x: hidden;
+}
+
+.sidebar__chats::-webkit-scrollbar {
+  width: 5px;
+  height: 8px;
+}
+
+.sidebar__chats::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+.sidebar__chats::-webkit-scrollbar-thumb {
+  background: #888;
+}
+
+.user {
+  display: flex;
+  align-items: center;
+}
+
+.sidebar__chats::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
+.user__info {
+  margin-left: 8px;
+  display: flex;
+  flex-direction: column;
+}
+
+.user__info__name {
+  text-transform: capitalize;
+  font-size: 12px;
+}
+
+.user__info__email {
+  font-size: 10px;
+  color: grey;
+}
+
+@media only screen and (max-width: 768px) {
+  .sidebar {
+    flex: 0.35;
+  }
+}

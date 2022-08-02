@@ -1,0 +1,105 @@
+.userlist {
+  width: 100%;
+  height: 100%;
+  background-color: whitesmoke;
+}
+.userlist-navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 10%;
+  padding: 2px 20px;
+  background-color: white;
+  border-bottom: 2px solid grey;
+  margin-bottom: 20px;
+}
+.userlist-header-right {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  width: 15%;
+}
+.userlist-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+.userlist-profile {
+  justify-self: flex-start;
+}
+.userlist-container-container {
+  border-bottom: 0.1px solid grey;
+  display: flex;
+  width: 50%;
+  padding: 5px;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.userlist-userinfo-title {
+  margin: 0 10px 0 20px;
+}
+
+.tg {
+  border-collapse: collapse;
+  border-color: #ccc;
+  border-spacing: 0;
+}
+.tg td {
+  background-color: #fff;
+  border-bottom-width: 1px;
+  border-color: #ccc;
+  border-style: solid;
+  border-top-width: 1px;
+  border-width: 0px;
+  color: #333;
+  font-family: Arial, sans-serif;
+  font-size: 14px;
+  overflow: hidden;
+  padding: 10px 20px;
+  word-break: normal;
+}
+.tg th {
+  background-color: #f0f0f0;
+  border-bottom-width: 1px;
+  border-color: #ccc;
+  border-style: solid;
+  border-top-width: 1px;
+  border-width: 0px;
+  color: #333;
+  font-family: Arial, sans-serif;
+  font-size: 14px;
+  font-weight: normal;
+  overflow: hidden;
+  padding: 10px 20px;
+  word-break: normal;
+}
+.tg .tg-ul38 {
+  position: -webkit-sticky;
+  position: sticky;
+  text-align: left;
+  top: -1px;
+  vertical-align: top;
+  will-change: transform;
+}
+.tg .tg-buh4 {
+  background-color: #f9f9f9;
+  text-align: left;
+  vertical-align: top;
+}
+.tg .tg-ru17 {
+  font-weight: bold;
+  position: -webkit-sticky;
+  position: sticky;
+  text-align: left;
+  top: -1px;
+  vertical-align: top;
+  will-change: transform;
+}
+.tg .tg-797t {
+  background-color: #f9f9f9;
+  font-weight: bold;
+  text-align: left;
+  vertical-align: top;
+}
