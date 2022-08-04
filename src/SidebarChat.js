@@ -46,7 +46,10 @@ function SidebarChat({ id, name, addNewChat }) {
         <Avatar src={`https://avatars.dicebear.com/api/human/1.svg`} />
         <div className="sidebarChat__info">
           <h2>{name}</h2>
-          <p>{last[0]?.msg.substring(0 ,20) + "..." || "no new message"}</p>
+          <p>{
+          last[0] ? (
+          last[0]?.msg.length >= 21 ?
+          last[0]?.msg.substring(0 ,20) + "..." : last[0]?.msg ) : "No New Message"}</p>
         </div>
       </div>
     </Link>

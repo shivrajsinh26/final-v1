@@ -24,13 +24,12 @@ import Picker from "emoji-picker-react";
 function Chat() {
   const [chosenEmoji, setChosenEmoji] = useState(null);
   const [emoji, setEmoji] = useState(false);
-  const [search, setSearch] = useState(false);
   const [{ user }] = useStateValue();
   const textbox = useRef(null);
   const [message, setMessage] = useState("");
   var id = useParams();
+  const lstmsgref = useRef(null);
   const [chatName, setChatName] = useState("");
-  const [searchMessage, setSearchMessage] = useState("");
   const [messages, setMessages] = useState([]);
 
   const onEmojiClick = (event, emojiObject) => {
@@ -68,13 +67,11 @@ function Chat() {
     });
   };
 
-  // const messagesEndRef = useRef(null)
+  
 
-  // const scrollToBottom = () => {
-  //   messagesEndRef.current.scrollIntoView({ behavior: "smooth" })
-  // }
-
-  // useEffect(scrollToBottom, [messages]);
+  useEffect(() => {
+    lstmsgref?.current?.scrollIntoView();
+  }, [messages]);
 
   return (
     <div className="chat">
@@ -84,33 +81,18 @@ function Chat() {
           <div className="chat__headerText">
             <h2>{chatName}</h2>
             <p>
-              {new Date(
-                messages[messages.length - 1]?.timestamp?.toDate().toUTCString()
-              ).toLocaleString()}
+              {messages[messages.length - 1]?.timestamp
+                ? new Date(
+                    messages[messages.length - 1]?.timestamp
+                      ?.toDate()
+                      .toUTCString()
+                  ).toLocaleString()
+                : "Offline"}
             </p>
           </div>
         </div>
         <div className="chat__headerRight">
-          {search ? (
-            <>
-              <input
-                type="text"
-                value={searchMessage}
-                onChange={(e) => {
-                  setSearchMessage(e.target.value);
-                }}
-                placeholder="Search Messages..."
-              ></input>
-            </>
-          ) : (
-            <></>
-          )}
-
-          <IconButton
-            onClick={() => {
-              setSearch(!search);
-            }}
-          >
+          <IconButton>
             <SearchOutlined />
           </IconButton>
           <IconButton>
@@ -120,23 +102,8 @@ function Chat() {
       </div>
 
       <div className="chat__body">
-        {messages.filter((message) => {
-              if (searchMessage === "") {
-                return message;
-              } else if (
-                message.data.msg.toLowerCase().includes(searchMessage.toLowerCase())
-              ) {
-                return message;
-              } else if (
-                message.data.msg
-                  .toLowerCase()
-                  .includes(searchMessage.toLowerCase()) === 0
-              ) {
-                return alert("No Messages Found");
-              }
-              return null;
-            }).map((message) => (
-          <div className="chat__message__container" key={message.id}>
+        {messages.map((message) => (
+          <div className="chat__message__container"  ref={lstmsgref}>
             <div
               className={`chat__message ${
                 message.sender === user.uid ? "sent" : "recieved"
@@ -150,33 +117,19 @@ function Chat() {
               <div className="chat__messageTime">
                 {<Moment fromNow>{message.timestamp?.toDate()}</Moment>}
               </div>
-            </div>
-            {/* <div ref={messagesEndRef} /> */}
+            </div >
+            
           </div>
         ))}
-        {emoji ? (
-          <>
-            <div className="chat__emojipicker">
-              <Picker
-                searchPlaceholder={"search emojis"}
-                disableAutoFocus={true}
-                onEmojiClick={onEmojiClick}
-                pickerStyle={{ width: "50%" }}
-              />
-            </div>
-          </>
-        ) : (
-          <></>
-        )}
       </div>
       <div className="chat__footer">
         <div className="chat__footerContent">
           <div className="chat__footerContentLeft">
-            {/* {emoji ? (
+            {emoji ? (
               <>
                 <div className="chat__emojipicker">
                   <Picker
-                  searchPlaceholder = {"search emojis"}
+                    searchPlaceholder={"search emojis"}
                     disableAutoFocus={true}
                     onEmojiClick={onEmojiClick}
                     pickerStyle={{ width: "50%" }}
@@ -185,7 +138,7 @@ function Chat() {
               </>
             ) : (
               <></>
-            )} */}
+            )}
             <IconButton
               onClick={() => {
                 setEmoji(!emoji);
