@@ -32,7 +32,6 @@ function SidebarChat({ id, name, addNewChat }) {
   };
 
   useEffect(() => {
-    console.log(id)
      const msgRef=  collection(db, "chats",`${id}`, "messages")
      const q = query(msgRef , orderBy("timestamp", "desc"));
      onSnapshot(q , (snapshot) => {
@@ -43,7 +42,7 @@ function SidebarChat({ id, name, addNewChat }) {
   return !addNewChat ? (
     <Link to={`/chats/${id}`}>
       <div className="sidebarChat">
-        <Avatar src={`https://avatars.dicebear.com/api/human/1.svg`} />
+        <Avatar />
         <div className="sidebarChat__info">
           <h2>{name}</h2>
           <p>{

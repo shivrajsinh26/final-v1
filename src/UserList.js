@@ -4,8 +4,9 @@ import "../src/css/userlist.css";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import { Link, useNavigate } from "react-router-dom";
 import { useStateValue } from "./StateProvider";
-import { collection, onSnapshot } from "firebase/firestore";
+import { addDoc, collection, doc, onSnapshot, setDoc } from "firebase/firestore";
 import db from "./FirebaseConfig";
+import { v4 as uuidv4 } from 'uuid';
 
 const UserList = () => {
   const [{ user }, dispatch] = useStateValue();
@@ -16,9 +17,16 @@ const UserList = () => {
     onSnapshot(docRef, (snapshot) => {
       setUserList(snapshot.docs.map((doc) => doc.data()));
     });
-    console.log(userList);
   }, []);
   const navigate = useNavigate();
+
+  const handleDoc = async (frd) => {
+    const iid = frd.uid > user.uid ? `${user.uid}${frd.uid}` : `${frd.uid}${user.uid}`;
+    await setDoc(doc(db , "usersChats", iid) , {
+      chatUsers : [user.uid , frd.uid].sort((a ,b) => a - b )
+    })
+  }
+
 
   return (
     <div className="userlist">
@@ -35,33 +43,32 @@ const UserList = () => {
           <Avatar src={`${user.photoURL}`} />
         </div>
       </div>
-      <div className="userlist-container">
-        <table class="tg">
+      <div className="userlist-container" >
+        <table className="tg">
           <thead>
             <tr>
-              <th class="tg-ul38">Profile Picture</th>
-              <th class="tg-ru17">Name</th>
-              <th class="tg-ul38">Email</th>
-              <th class="tg-ul38">Message</th>
+              <th className="tg-ul38">Profile Picture</th>
+              <th className="tg-ru17">Name</th>
+              <th className="tg-ul38">Message</th>
             </tr>
           </thead>
           <tbody>
-            {userList.map((user) => {
+            {userList.map((frd) => {
               return (
-                <tr>
-                  <td class="tg-buh4">
-                    <Avatar src={user.photo} />
+                <tr key={
+                  uuidv4()
+                }>
+                  <td className="tg-buh4">
+                    <Avatar src={frd.photo} />
                   </td>
-                  <td class="tg-797t">{user.name}</td>
-                  <td class="tg-buh4">{user.email}</td>
-                  <td class="tg-buh4">
+                  <td className="tg-797t">{frd.name}</td>
+                  <td className="tg-buh4">
                     {
                      
                       <Button variant="contained" onClick={() => {
-                        
                         navigate('/');
-                        navigate(`/chats/${user.uid}` , {replace:true})
-                        
+                        navigate(`/chats/${frd.uid}` , {replace:true})
+                        handleDoc(frd);
                       }}>
                         Send Message
                       </Button>
@@ -78,3 +85,4 @@ const UserList = () => {
 };
 
 export default UserList;
+

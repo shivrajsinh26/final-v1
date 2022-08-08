@@ -20,6 +20,14 @@ import {
 import { useStateValue } from "./StateProvider";
 import Moment from "react-moment";
 import Picker from "emoji-picker-react";
+import { v4 as uuidv4 } from 'uuid';
+
+
+
+
+
+
+
 
 function Chat() {
   const [chosenEmoji, setChosenEmoji] = useState(null);
@@ -33,8 +41,7 @@ function Chat() {
   const [messages, setMessages] = useState([]);
 
   const onEmojiClick = (event, emojiObject) => {
-    setChosenEmoji(emojiObject);
-    setMessage(message.concat(chosenEmoji.emoji));
+    setMessage(message?.concat(emojiObject.emoji));
     textbox.current.focus();
   };
 
@@ -103,7 +110,7 @@ function Chat() {
 
       <div className="chat__body">
         {messages.map((message) => (
-          <div className="chat__message__container"  ref={lstmsgref}>
+          <div className="chat__message__container"  ref={lstmsgref} key={uuidv4()}>
             <div
               className={`chat__message ${
                 message.sender === user.uid ? "sent" : "recieved"

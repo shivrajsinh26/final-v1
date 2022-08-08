@@ -6,7 +6,14 @@ import SearchOutlined from "@mui/icons-material/SearchOutlined";
 import "./css/Sidebar.css";
 import SidebarChat from "./SidebarChat";
 import db from "./FirebaseConfig";
-import { collection, onSnapshot } from "firebase/firestore";
+import {
+  collection,
+  doc,
+  onSnapshot,
+  onSnapshotsInSync,
+  query,
+  where,
+} from "firebase/firestore";
 import { Link, Outlet } from "react-router-dom";
 import MenuItem from "@mui/material/MenuItem";
 import Menu from "@mui/material/Menu";
@@ -14,11 +21,14 @@ import { getAuth, signOut } from "firebase/auth";
 import { useStateValue } from "./StateProvider";
 import { actionTypes } from "./Reducer";
 import UserList from "./UserList";
+import { ConnectedTvOutlined } from "@mui/icons-material";
 // import { getAuth, signOut } from "firebase/auth";
 
 function Sidebar() {
   const [{ user }, dispatch] = useStateValue();
   const [chats, setChats] = useState([]);
+  const [ID, setID] = useState([]);
+  const [frdchats, setFrdChats] = useState([]);
   const [searchQuery, setSearchQuery] = useState("");
 
   useEffect(() => {
@@ -26,6 +36,7 @@ function Sidebar() {
 
     onSnapshot(colRef, (snapshot) => {
       setChats(
+        ...chats,
         snapshot.docs.map((doc) => ({
           id: doc.id,
           data: doc.data(),
@@ -33,6 +44,17 @@ function Sidebar() {
       );
     });
   }, []);
+
+
+  useEffect(() => {
+    onSnapshot(query(collection(db , "usersChats") , where("chatUsers" , "array-contains" , user.uid)) , (snapshot) => {
+      console.log(snapshot.docs.map(doc => doc.data().chatUsers.map(user => user)));
+    })
+  
+  
+
+  }, [])
+  
 
   const [anchorEl, setAnchorEl] = React.useState(null);
 
@@ -108,9 +130,9 @@ function Sidebar() {
         </div>
 
         <div className="sidebar__chats">
-          <SidebarChat addNewChat id="696969" />
+          <SidebarChat addNewChat id="addNewChat" />
           {chats
-            .filter((chat) => {
+            ?.filter((chat) => {
               if (searchQuery === "") {
                 return chat;
               } else if (
@@ -129,9 +151,37 @@ function Sidebar() {
             .map((chat) => (
               <SidebarChat key={chat.id} id={chat.id} name={chat.data.name} />
             ))}
+
+          {frdchats
+            ?.filter((chat) => {
+              if (searchQuery === "") {
+                return chat;
+              } else if (
+                frdchats.data.name
+                  .toLowerCase()
+                  .includes(searchQuery.toLowerCase())
+              ) {
+                return chat;
+              } else if (
+                frdchats.data.name
+                  .toLowerCase()
+                  .includes(searchQuery.toLowerCase()) === 0
+              ) {
+                return alert("No Chat Found");
+              }
+              return null;
+            })
+            .map((chat) => (
+              <SidebarChat
+                key={chat.id}
+                id={chat.id}
+                name={chat.data.name}
+                pp={chat?.data?.pp}
+              />
+            ))}
         </div>
       </div>
-      <Outlet />{" "}
+      <Outlet />
     </>
   );
 }
